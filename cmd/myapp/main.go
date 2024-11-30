@@ -3,8 +3,9 @@ package main
 import (
 	"fmt"
 	"os"
-	"task-list/pkg"
 	"task-list/server"
+	"github.com/wehw93/task_list/internal/pkg"
+	
 )
 
 func main() {

@@ -1,4 +1,4 @@
-package godb
+package store
 
 import (
 	"context"

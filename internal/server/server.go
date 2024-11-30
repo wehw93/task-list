@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
-	"task-list/godb"
+	"github.com/wehw93/task-list/internal/store"
 
 	"github.com/jackc/pgx/v4/pgxpool"
 )
@@ -154,11 +154,11 @@ func After_login(user *User) {
 func loginin(thisUser *User, conn *pgxpool.Pool) bool {
 	var name_ string
 	var pass_ string
-	db_user := godb.User{}
+	db_user := store.User{}
 	var id int
 	fmt.Println("Your name: ")
 	fmt.Scan(&name_)
-	ins := godb.Instance{conn}
+	ins := store.Instance{conn}
 	row := ins.Db.QueryRow(context.Background(), "SELECT password, id FROM users WHERE $1 = name", name_)
 	err := row.Scan(&db_user.Password, &id)
 	if err != nil {
@@ -184,10 +184,10 @@ func (u *User) signup(conn *pgxpool.Pool) {
 	fmt.Scan(&u.Name)
 	fmt.Println("Password: ")
 	fmt.Scan(&u.Password)
-	userBd := godb.User{}
+	userBd := store.User{}
 	userBd.Name = u.Name
 	userBd.Password = u.Password
-	ins := godb.Instance{conn}
+	ins := store.Instance{conn}
 	ins.CreateUser(userBd)
 	fmt.Println("User information saved successfully.")
 }
